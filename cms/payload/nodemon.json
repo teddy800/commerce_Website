@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": "ts,tsx,json",
+  "ignore": ["src/payload-types.ts"],
+  "exec": "ts-node --project tsconfig.json src/server.ts"
+}

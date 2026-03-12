@@ -1,0 +1,37 @@
+{
+  "name": "modern-ecommerce-platform",
+  "version": "1.0.0",
+  "description": "Full-stack e-commerce platform with Next.js, Payload CMS, and Medusa.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:cms\" \"npm run dev:backend\" \"npm run dev:sync\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:cms": "cd cms && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:sync": "cd sync-service && npm run dev",
+    "install:all": "npm run install:frontend && npm run install:cms && npm run install:backend && npm run install:sync",
+    "install:frontend": "cd frontend && npm install",
+    "install:cms": "cd cms && npm install",
+    "install:backend": "cd backend && npm install",
+    "install:sync": "cd sync-service && npm install",
+    "build:all": "npm run build:frontend && npm run build:cms && npm run build:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:cms": "cd cms && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "lint": "cd frontend && npm run lint",
+    "test": "cd frontend && npm test",
+    "lighthouse": "lighthouse http://localhost:3000 --view"
+  },
+  "keywords": [
+    "ecommerce",
+    "nextjs",
+    "payload-cms",
+    "medusa",
+    "tailwindcss",
+    "typescript"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
