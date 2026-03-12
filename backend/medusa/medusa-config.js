@@ -60,9 +60,5 @@ module.exports = {
         outDir: 'dist',
       },
     },
-    {
-      resolve: `medusa-payment-manual`,
-      options: {},
-    },
   ],
 }
