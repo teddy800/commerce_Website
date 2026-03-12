@@ -1,0 +1,22 @@
+{
+  "name": "cah-medusa-backend",
+  "version": "2.0.0",
+  "description": "Medusa v2 backend for card game store",
+  "scripts": {
+    "dev": "medusa develop",
+    "build": "medusa build",
+    "start": "medusa start",
+    "migrations": "medusa migrations run"
+  },
+  "dependencies": {
+    "@medusajs/admin-bundler": "latest",
+    "@medusajs/framework": "latest",
+    "@medusajs/medusa": "latest",
+    "@medusajs/ui": "latest",
+    "pg": "^8.11.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.0",
+    "typescript": "^5.2.2"
+  }
+}
