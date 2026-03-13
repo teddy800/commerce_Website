@@ -1,58 +1,57 @@
+const { MedusaContainer } = require('@medusajs/medusa');
 const { createConnection } = require('typeorm');
-const bcrypt = require('bcrypt');
 
 async function createAdminUser() {
+  console.log('🔧 Creating Medusa admin user...');
+  
   try {
-    // Connect to the database
+    // Create database connection
     const connection = await createConnection({
       type: 'postgres',
       url: process.env.DATABASE_URL,
       entities: ['node_modules/@medusajs/medusa/dist/models/*.js'],
-      synchronize: false,
+      migrations: ['node_modules/@medusajs/medusa/dist/migrations/*.js'],
+      logging: false,
     });
 
-    console.log('✅ Connected to database');
+    const userRepository = connection.getRepository('User');
+    
+    // Check if admin user already exists
+    const existingUser = await userRepository.findOne({
+      where: { email: 'test@admin.com' }
+    });
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash('admin123', 10);
-
-    // Check if user already exists
-    const existingUser = await connection.query(
-      'SELECT * FROM "user" WHERE email = $1',
-      ['admin@medusa.com']
-    );
-
-    if (existingUser.length > 0) {
-      console.log('ℹ️  User already exists, updating password...');
-      await connection.query(
-        'UPDATE "user" SET password_hash = $1 WHERE email = $2',
-        [hashedPassword, 'admin@medusa.com']
-      );
-      console.log('✅ Password updated successfully!');
-    } else {
-      console.log('📝 Creating new admin user...');
-      await connection.query(
-        `INSERT INTO "user" (email, password_hash, role, first_name, last_name, created_at, updated_at) 
-         VALUES ($1, $2, $3, $4, $5, NOW(), NOW())`,
-        ['admin@medusa.com', hashedPassword, 'admin', 'Admin', 'User']
-      );
-      console.log('✅ Admin user created successfully!');
+    if (existingUser) {
+      console.log('✅ Admin user already exists!');
+      console.log('📧 Email: test@admin.com');
+      console.log('🔑 Password: admin123');
+      await connection.close();
+      return;
     }
 
-    console.log('\n🎉 You can now login with:');
-    console.log('   Email: admin@medusa.com');
-    console.log('   Password: admin123');
-    console.log('\n🌐 Login at: http://localhost:7001/login');
+    // Create new admin user
+    const bcrypt = require('bcrypt');
+    const hashedPassword = await bcrypt.hash('admin123', 10);
 
+    const adminUser = userRepository.create({
+      email: 'test@admin.com',
+      password_hash: hashedPassword,
+      role: 'admin',
+      first_name: 'Admin',
+      last_name: 'User',
+    });
+
+    await userRepository.save(adminUser);
+    
+    console.log('✅ Admin user created successfully!');
+    console.log('📧 Email: test@admin.com');
+    console.log('🔑 Password: admin123');
+    console.log('🌐 Login at: http://localhost:7001');
+    
     await connection.close();
-    process.exit(0);
   } catch (error) {
-    console.error('❌ Error:', error.message);
-    process.exit(1);
+    console.error('❌ Error creating admin user:', error.message);
   }
 }
-
-// Load environment variables
-require('dotenv').config();
 
 createAdminUser();
