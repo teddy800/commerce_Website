@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useCartStore } from '@/lib/store/cartStore';
+import { showToast } from '@/components/common/Toast';
 
 interface AddToCartProps {
   productId?: string;
@@ -31,11 +32,11 @@ export default function AddToCart({ productId: _productId, variantId, inventory 
         total: 0,
       };
       addItem(lineItem);
-      // Show success message
-      alert('Added to cart!');
+      // Show success toast
+      showToast('Added to cart!', 'success');
     } catch (error) {
       console.error('Failed to add to cart:', error);
-      alert('Failed to add to cart');
+      showToast('Failed to add to cart', 'error');
     } finally {
       setLoading(false);
     }
@@ -64,7 +65,7 @@ export default function AddToCart({ productId: _productId, variantId, inventory 
           <button
             onClick={decrementQuantity}
             disabled={quantity <= 1}
-            className="w-10 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-10 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-105"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
@@ -83,7 +84,7 @@ export default function AddToCart({ productId: _productId, variantId, inventory 
           <button
             onClick={incrementQuantity}
             disabled={quantity >= inventory}
-            className="w-10 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-10 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center hover:border-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:scale-105"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -100,7 +101,7 @@ export default function AddToCart({ productId: _productId, variantId, inventory 
       <button
         onClick={handleAddToCart}
         disabled={loading || !variantId}
-        className="w-full bg-black text-white py-4 px-6 rounded-lg font-semibold hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+        className="w-full bg-black text-white py-4 px-6 rounded-lg font-semibold hover:bg-gray-800 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 animate-pulse-subtle"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -115,7 +116,7 @@ export default function AddToCart({ productId: _productId, variantId, inventory 
 
       {/* Buy Now Button */}
       <button
-        className="w-full bg-gray-100 text-gray-900 py-4 px-6 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
+        className="w-full bg-gray-100 text-gray-900 py-4 px-6 rounded-lg font-semibold hover:bg-gray-200 transition-all hover:scale-105"
       >
         Buy Now
       </button>

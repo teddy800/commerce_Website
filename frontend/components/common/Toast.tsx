@@ -94,3 +94,8 @@ export const toast = {
   warning: (message: string, duration?: number) =>
     useToastStore.getState().addToast(message, 'warning', duration),
 };
+
+// Convenience function
+export const showToast = (message: string, type: ToastType = 'info', duration?: number) => {
+  useToastStore.getState().addToast(message, type, duration);
+};
