@@ -28,7 +28,15 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           </Link>
           <div className="absolute top-2 right-2 z-10">
-            <WishlistButton productId={product.id} />
+            <WishlistButton 
+              product={{
+                id: product.id,
+                title: product.title,
+                price: product.price,
+                image: imageUrl,
+                slug: product.slug
+              }} 
+            />
           </div>
         </div>
         <div className="p-4">

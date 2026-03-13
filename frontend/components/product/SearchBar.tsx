@@ -28,6 +28,7 @@ export default function SearchBar() {
         clearTimeout(debounceTimer.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   return (
@@ -77,7 +78,7 @@ export default function SearchBar() {
         <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 animate-slide-in-down">
           <div className="p-2">
             <p className="text-sm text-gray-500 px-3 py-2">
-              Searching for "{query}"...
+              Searching for &quot;{query}&quot;...
             </p>
           </div>
         </div>
